@@ -21,7 +21,6 @@ local.env
 
 # IDE
 /.idea/
-.vscode/*
 *.code-workspace
 
 # JS
