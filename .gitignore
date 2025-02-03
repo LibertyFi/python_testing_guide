@@ -1,0 +1,39 @@
+# Python
+.venv/
+__pycache__/
+.coverage
+.pytest_cache/
+.python-version
+
+# Database
+.mariadb/
+
+# Redis
+.redis/
+
+# Dotenv
+local.env
+.env.*
+.env
+
+# Taskfile
+.task/
+
+# IDE
+/.idea/
+.vscode/*
+*.code-workspace
+
+# JS
+node_modules/
+dist/
+
+# Misc
+/py/projects/portfolio-exporter/reports/
+/py/projects/tools/reports
+/py/projects/chatbot/data/conversations/
+/py/projects/chatbot/data/portfolio
+/py/projects/chatbot/data/portfolio-list
+/py/projects/chatbot/data/user-risk-profile
+/py/projects/chatbot/data/market-data
+.chromadb
