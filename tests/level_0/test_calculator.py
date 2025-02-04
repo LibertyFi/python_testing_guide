@@ -1,8 +1,9 @@
 import pytest
 
-from src.calculator import add, divide, multiply, subtract
+from src.level_0.calculator import add, divide, multiply, subtract
 
 
+# This test is too complicated, it tests too many things
 def test_operations() -> None:
     assert add(2, 3) == 5
     assert add(-1, 1) == 0
@@ -18,6 +19,7 @@ def test_operations() -> None:
         divide(6, 0)
 
 
+# Instead, we should split it into proper unit tests: each one tests one unit of code
 def test_add() -> None:
     assert add(2, 3) == 5
     assert add(-1, 1) == 0
