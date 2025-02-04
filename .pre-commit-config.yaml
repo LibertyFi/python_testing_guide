@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.3
+    hooks:
+      - id: ruff
+        name: ruff lint
+        # Avoid running on jupyter notebooks.
+        types_or: [python, pyi]
+        args: [--fix, --show-fixes]
+
+      - id: ruff-format
+        name: ruff format
+        # Avoid running on jupyter notebooks.
+        types_or: [python, pyi]
+
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.392
+    hooks:
+      - id: pyright
+        name: pyright
+        # Avoid running on jupyter notebooks.
+        types_or: [python, pyi]
+        # Need to exclude tests here because the exclude in pyproject.toml is ignored if a file
+        # is explicitly passed to pyright.
+        exclude: ^tests/
+        # Pyright doesn't automatically use the pyproject.toml file closest to the file being checked.
+        # So we need to pass the pyproject.toml file explicitly.
+        # This is why we need a separate hook for each project.
+        args: [-p, pyproject.toml]
