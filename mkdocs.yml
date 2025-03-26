@@ -1,0 +1,17 @@
+site_name: Python Testing Guide
+
+theme:
+  name: "material"
+
+nav:
+  - Tutorial: tutorial.md
+  - Guide: guide.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets
