@@ -39,6 +39,8 @@ tests/
 │ ├── test_calculator.py
 ```
 
+#### What should a unit test do?
+
 The goal of unit testing is to verify that small, isolated units of code (usually functions or methods) perform correctly and handle edge cases as designed.
 
 As such a unit test should be as simple as possible and test only one thing.

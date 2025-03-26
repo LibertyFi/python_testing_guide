@@ -36,3 +36,5 @@ dist/
 /py/projects/chatbot/data/user-risk-profile
 /py/projects/chatbot/data/market-data
 .chromadb
+
+site/
