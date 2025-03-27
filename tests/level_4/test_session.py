@@ -7,6 +7,7 @@ from src.level_4.session import Session
 
 # Sometimes we want to mock an entire class instead of just one instance, so we patch the class and have it return a
 # mock instance
+# --8<-- [start:mock_class]
 @patch("src.level_4.session.ServerInterface")
 def test_connect_success(mock_interface_class: MagicMock) -> None:
     mock_interface = Mock(spec_set=ServerInterface)
@@ -21,8 +22,12 @@ def test_connect_success(mock_interface_class: MagicMock) -> None:
     assert connected
 
 
+# --8<-- [end:mock_class]
+
+
 # But we still haven't mocked the database!
 # Here's how we can handle a class such as Database, that returns a context manager
+# --8<-- [start:mock_db]
 @patch("src.level_4.session.ServerInterface")
 @patch("src.level_4.session.Db", spec_set=Database)
 def test_connect_success_mock_db(mock_db: MagicMock, mock_interface_class: MagicMock) -> None:
@@ -36,6 +41,10 @@ def test_connect_success_mock_db(mock_db: MagicMock, mock_interface_class: Magic
     connected = session.connect()
 
     mock_conn.begin.assert_called_once()
+    mock_conn.commit.assert_called_once()
     mock_interface.connect_to_server.assert_called_once()
 
     assert connected
+
+
+# --8<-- [end:mock_db]

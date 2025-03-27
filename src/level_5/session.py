@@ -12,6 +12,8 @@ class Session:
     def connect(self) -> bool:
         with Db.get() as conn:
             conn.begin()
+            # TODO: write some data to the database
+            conn.commit()
         connected = self.interface.connect_to_server()
         if connected:
             self.connection_counter.increment()

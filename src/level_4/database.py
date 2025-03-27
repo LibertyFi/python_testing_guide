@@ -11,6 +11,9 @@ class Connection:
     def begin(self) -> None:
         logging.info("Called actual begin")
 
+    def commit(self) -> None:
+        logging.info("Called actual commit")
+
     def __enter__(self) -> Self:
         return self
 

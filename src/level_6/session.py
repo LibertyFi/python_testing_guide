@@ -13,9 +13,6 @@ class Session:
 
     def connect(self) -> None:
         self.connected = self.interface.connect_to_server()
-        if not self.connected:
-            msg = "Failed to connect to server"
-            raise ConnectionError(msg)
 
     def start(self) -> None:
         self.connect()

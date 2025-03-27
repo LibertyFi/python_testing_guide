@@ -11,5 +11,7 @@ class Session:
     def connect(self) -> bool:
         with Db.get() as conn:
             conn.begin()
+            # TODO: write some data to the database
+            conn.commit()
 
         return self.interface.connect_to_server()

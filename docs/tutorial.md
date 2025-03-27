@@ -4,6 +4,7 @@
 
 - Python 3.11+
 - pytest installed as a dev dependency
+- pytest-asyncio installed as a dev dependency
 
 ## What Unit Tests Are For
 
@@ -193,10 +194,326 @@ If you need to mock an instance attribute (or any attribute that is defined at r
     --8<-- "tests/level_2/test_session.py:simple_spec_one_liner"
     ```
 
-#### Mock vs MagicMock vs AsyncMock
+#### When Mock is not enough
+
+Sometimes using `Mock` is not enough. Let's take this new example class:
+
+```python title="session.py"
+--8<-- "src/level_3/session.py"
+```
+
+##### MagicMock
+
+We can try testing the `connect` method with `Mock` as we did before:
+
+```python title="test_session.py"
+--8<-- "tests/level_3/test_session.py:missing_magic_method"
+```
+
+Unfortunately mocking the `active_connections` attribute with `Mock` doesn't work because `Mock` doesn't implement the magic/special `__add__` method so it can't effectively mock an `int`.
+
+We could mock the `__add__` method ourselves, but that would be tedious and error-prone since it's not always obvious which magic methods are used by the code.
+
+Fortunately, `Mock` has a subclass called `MagicMock` that automatically implements the magic/special methods:
+
+```python title="test_session.py"
+--8<-- "tests/level_3/test_session.py:magic_mock"
+```
+
+Using `MagicMock` we don't have to worry about mocking any magic/special methods ourselves.
+
+!!! tip "Magic Methods"
+
+    If you use the `spec` or `spec_set` arguments then only magic methods that exist in the spec will be created.
+    You can override the magic methods of a `MagicMock` by setting them just like you would with a normal `Mock`.
+
+##### AsyncMock
+
+We'd also like to test the `aconnect` method, but it's an async function so we can't use a simple `Mock` to mock it.
+
+Fortunately, `Mock` has a subclass called `AsyncMock` that can be used to mock async functions:
+
+```python title="test_session.py"
+--8<-- "tests/level_3/test_session.py:async_mock"
+```
+
+!!! tip "AsyncMock calls"
+
+    You can use `assert_awaited_once()` or similar methods to check that an async function is awaited and not just called.
+
+!!! warning "Decorator for async tests"
+
+    The `@pytest.mark.asyncio` decorator is required on each async test.
 
 #### Mocking a class
 
+Sometimes we need to mock a class and not just an object or a function.
+
+Let's take the following example:
+
+```python title="session.py"
+--8<-- "src/level_4/session.py"
+```
+
+Instead of passing the interface as an argument when creating the `Session` object, it is instantiated by the class itself at initialization.
+
+So we need to mock the full class, not just an instance of it.
+
+```python title="test_session.py"
+--8<-- "tests/level_4/test_session.py:mock_class"
+```
+
+We use the `@patch` decorator to mock the `ServerInterface` class, then we create a `Mock` object and assign it to the `return_value` of the mock class.
+
+!!! danger "Patch in the right place"
+
+    When using the patch function, it's important to patch the function **where it's used**, not where it's defined.
+
+    :white_check_mark: `patch("src.level_4.session.ServerInterface")`
+
+    :x: ~~`patch("src.level_4.interface.ServerInterface")`~~
+
+The test works fine, but we forgot to mock the `Database` class so the test is actually using the real Database, which could be dangerous!
+
+So let's mock the `Database` class as well:
+
+```python title="test_session.py"
+--8<-- "tests/level_4/test_session.py:mock_db"
+```
+
+Since the `Database` class is used with a context manager, using `with`, through its `get` method, the mock definition is a bit more complicated.
+
+!!! danger "The order of patch decorators matters"
+
+    The patch decorators automatically provide the test function with the mocks as arguments. The arguments are provided in the same order as the decorators are applied to the function, which is the opposite order as the decorators appear above the test function. Thus the first argument will match de decorator closest to the function and the last argument the furthest.
+
 ### Test Fixtures
 
+Let's use a new example class:
+
+```python title="session.py"
+--8<-- "src/level_5/session.py"
+```
+
+#### What are test fixtures?
+
+In our example, any test of the `Session` class's `connect` method will need to mock the `ServerInterface` and `Database` classes as well as a `ConnectionCounter` object.
+Duplicating the mock setup code would be a bad practice.
+
+A test fixture allows us to create a test setup that is used by several tests.
+
+It can create a mock and provide it to the tests:
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_mock"
+```
+
+It can also patch a class and provide the resulting mock to the tests:
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_patch"
+```
+
+!!! note "Patch decorator or context manager"
+
+    As we've already seen, the `patch` function can be used as a decorator, which applies the patch to the scope of the test function.
+    It can also be used as a context manager, in which case the patch is applied to the scope of the with block.
+
+A test fixture can also return more complicated objects:
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_autouse"
+```
+
+#### How to use test fixtures
+
+To use a test fixture, we just add it as an argument to the test function.
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_first_use"
+```
+
+The fixture code will be executed automatically before the test function is executed.
+
+To use it in another test, we just pass it as an argument to that function as well and it will be executed again.
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_second_use"
+```
+
+We've successfully avoided duplicating the mock setup code.
+
+But what about the `Database` class? We haven't added it as an argument to our test functions. So is the actual Database called by our tests?
+No! The `mock_db_connection` fixture was declared with the `autouse` flag, which means that it will be used automatically by all tests, without needing to pass it as an argument to the test function.
+
+!!! tip "Seeing logs when running the tests"
+
+    By default when you run the tests using `pytest`, the logs from your code are not displayed.
+    If you want to see them, you can run the tests with `-v --log-cli-level=INFO`.
+    In our example, if you activate the logs, you'll see that the logs from the actual `Database` class only show up if the `autouse` flag is not set.
+
+    ```python title="database.py"
+    --8<-- "src/level_5/database.py:db_logs"
+    ```
+
+But what if we want to check that the code under test actually calls the database? Since the `mock_db_connection` fixture is automatically used by all tests, we don't have a reference to the mock on which to call `assert_called_once()` or similar methods.
+
+Fortunately, we can pass the `mock_db_connection` fixture as an explicit argument to the test function and then reference it in the test.
+
+```python title="test_session.py"
+--8<-- "tests/level_5/test_session.py:fixture_explicit_use"
+```
+
+!!! danger "Combining fixtures and patch decorators"
+
+    The patch decorators automatically provide the test function with the mocks as arguments. The arguments are provided in the same order as the decorators are applied to the function, which is the opposite order as the decorators appear above the test function. The arguments for the test fixtures must come after the arguments for the patch decorators:
+    ```python
+    @patch("xxx.b")
+    @patch("xxx.a")
+    def test_function(mock_a, mock_b, fixture_mock):
+        ...
+    ```
+
 ### Advanced Mocking
+
+#### Side Effects
+
+We've already seen that we can specify the return value of a mock.
+But what if that's not enough?
+
+Let's take the following example:
+
+```python title="session.py"
+--8<-- "src/level_6/session.py"
+```
+
+We want to test the `start` method. It uses the `connect` method and the `is_server_connected` method so if we want to implement a proper unit test, we need to mock both, otherwise we're actually testing all three methods at the same time.
+
+First of all, we can define a fixture for the `ServerInterface` class:
+
+```python title="test_session.py"
+--8<-- "tests/level_6/test_session.py:mock_interface_class"
+```
+
+Second, we don't want our test to actually sleep for multiple seconds, we just want to check that it calls the `sleep` function, so let's define a fixture for the `time.sleep` function:
+
+```python title="test_session.py"
+--8<-- "tests/level_6/test_session.py:mock_sleep"
+```
+
+!!! danger "Patch in the right place"
+
+    Remember: when using the patch function, it's important to patch the function **where it's used**, not where it's defined.
+
+    :white_check_mark: `patch("src.level_6.session.time.sleep")`
+
+    :x: ~~`patch("time.sleep")`~~
+
+But there are two problems that we've not encountered yet:
+
+- the behavior of the `start` method depends on what the `connect` method does, and not what it returns. How can we mock the behavior of a method and not just its return value?
+- `is_server_connected` is called multiple times and the behavior of the `start` method depends on the value returned by this method each time it's called. How can we set multiple successive return values for a mock?
+
+That's where the `side_effect` attribute comes in.
+
+```python title="test_session.py"
+--8<-- "tests/level_6/test_session.py:with_side_effect"
+```
+
+The `side_effect` attribute can serve multiple purposes:
+
+- if set to a specific value, the mock will return that value every time its called, it's equivalent to setting the `return_value` attribute
+- if set to an iterable, the mock will return successive values from the iterable each time its called
+- if set to a function, the mock will call the function every time its called
+
+Here we used the iterable and function cases.
+
+If we don't specify the `side_effect`, the mock will not do anything, and that's a valid test case too!
+
+```python title="test_session.py"
+--8<-- "tests/level_6/test_session.py:without_side_effect"
+```
+
+!!! note "Mocking methods"
+
+    It can be seen as overkill to mock the other methods of a given class when testing a single method even though each methods will have its own unit tests anyway. But by doing it this way, we're making sure that breaking one method will only break the tests of that specific method and not the tests of all methods which call it.
+
+#### Checking Mock Calls
+
+We've already seen that we can check if a mock has been called or not. But we can also check the details of the calls to the mock.
+
+Let's take the following example:
+
+```python title="session.py"
+--8<-- "src/level_7/session.py"
+```
+
+We want to test the `send_messages` method.
+
+Let's test what happens when the method is called with a single message:
+
+```python title="test_session.py"
+--8<-- "tests/level_7/test_session.py:one_call_with_argument"
+```
+
+We check that the mock was called with the correct argument using `assert_called_once_with`.
+
+Let's add a test for a call with multiple messages:
+
+```python title="test_session.py"
+--8<-- "tests/level_7/test_session.py:multiple_calls_with_arguments"
+```
+
+We check the number of calls to the mock, as well as the order and content of the calls.
+
+!!! tip "Order of mock calls"
+
+    You can set the `any_order` flag of `assert_has_calls` to `True` if the order of the calls shouldn't matter.
+
+#### Exceptions
+
+There are two cases where we need to handle exceptions in our tests:
+
+- the code is supposed to catch an exception
+- the code is supposed to raise an exception
+
+Let's take the following example:
+
+```python title="session.py"
+--8<-- "src/level_8/session.py"
+```
+
+As before, we start by defining a fixture for the `ServerInterface` class:
+
+```python title="test_session.py"
+--8<-- "tests/level_8/test_session.py:mock_interface_class"
+```
+
+##### Check that an exception is caught
+
+Let's test that the `connect` method catches the `ConnectionError` exception raised by the `interface.connect_to_server` method:
+
+```python title="test_session.py"
+--8<-- "tests/level_8/test_session.py:caught_exception"
+```
+
+This is another purpose of the `side_effect` attribute: if provided with an exception class or instance, the mock will raise that exception instead of returning a value.
+
+!!! tip "Clearing a side effect"
+
+    A `side_effect` can be cleared by setting it to None
+
+##### Check that an exception is raised
+
+Let's test that the `connect` method raises the `SessionError` exception when expected:
+
+```python title="test_session.py"
+--8<-- "tests/level_8/test_session.py:raised_exception"
+```
+
+Since the code under test raises an exception, we need the test to catch it or it will crash. We also want to check that the exception was raised, that it's the correct exception type and that it's the correct message.
+`pytest.raises` allows us to do all of this.
+
+!!! tip "Match of pytest.raises"
+
+    The match argument allows us to check that the exception message matches a specific regex pattern, not just a static string.

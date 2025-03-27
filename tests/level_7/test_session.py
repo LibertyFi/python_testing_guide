@@ -14,6 +14,7 @@ def mock_interface() -> MagicMock:
 
 
 # We can check the content of the call to the mock.
+# --8<-- [start:one_call_with_argument]
 def test_send_messages_one_message(mock_interface: MagicMock) -> None:
     session = Session(mock_interface)
 
@@ -22,7 +23,11 @@ def test_send_messages_one_message(mock_interface: MagicMock) -> None:
     mock_interface.send_message.assert_called_once_with("Hello, World")
 
 
+# --8<-- [end:one_call_with_argument]
+
+
 # In case of multiple calls, we can also check the details of the calls.
+# --8<-- [start:multiple_calls_with_arguments]
 def test_send_messages_multiple_messages(mock_interface: MagicMock) -> None:
     session = Session(mock_interface)
 
@@ -38,3 +43,6 @@ def test_send_messages_multiple_messages(mock_interface: MagicMock) -> None:
             call("Hello, Universe"),
         ]
     )
+
+
+# --8<-- [end:multiple_calls_with_arguments]

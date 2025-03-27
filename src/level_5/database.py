@@ -7,10 +7,15 @@ if TYPE_CHECKING:
     from types import TracebackType
 
 
+# --8<-- [start:db_logs]
 class Connection:
     def begin(self) -> None:
         logging.info("Called actual begin")
 
+    def commit(self) -> None:
+        logging.info("Called actual commit")
+
+    # --8<-- [end:db_logs]
     def __enter__(self) -> Self:
         return self
 
