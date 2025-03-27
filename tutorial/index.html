@@ -367,11 +367,35 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mock-vs-magicmock-vs-asyncmock" class="md-nav__link">
+  <a href="#when-mock-is-not-enough" class="md-nav__link">
     <span class="md-ellipsis">
-      Mock vs MagicMock vs AsyncMock
+      When Mock is not enough
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="When Mock is not enough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magicmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      MagicMock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asyncmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      AsyncMock
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -590,11 +614,35 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mock-vs-magicmock-vs-asyncmock" class="md-nav__link">
+  <a href="#when-mock-is-not-enough" class="md-nav__link">
     <span class="md-ellipsis">
-      Mock vs MagicMock vs AsyncMock
+      When Mock is not enough
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="When Mock is not enough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magicmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      MagicMock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asyncmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      AsyncMock
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -948,7 +996,89 @@ Moreover, even if the <code>connect</code> method actually uses <code>not_an_act
     <span class="p">)</span>
 </code></pre></div>
 </div>
-<h4 id="mock-vs-magicmock-vs-asyncmock">Mock vs MagicMock vs AsyncMock</h4>
+<h4 id="when-mock-is-not-enough">When Mock is not enough</h4>
+<h5 id="magicmock">MagicMock</h5>
+<p>Sometimes using <code>Mock</code> is not enough. Let's take this new example class:</p>
+<div class="highlight"><span class="filename">session.py</span><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">src.level_3.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">ServerInterface</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Session</span><span class="p">:</span>
+    <span class="n">interface</span><span class="p">:</span> <span class="n">ServerInterface</span>
+    <span class="n">active_connections</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="n">ServerInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interface</span> <span class="o">=</span> <span class="n">interface</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">aconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">aconnect_to_server</span><span class="p">()</span>
+</code></pre></div>
+<p>We can try testing the <code>connect</code> method with <code>Mock</code> as we did before:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_missing_magic_method</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+    <span class="c1"># This raises a TypeError because Mock doesn&#39;t implement the magic/special __add__ method so it can&#39;t effectively</span>
+    <span class="c1"># mock an int</span>
+    <span class="c1"># session.active_connections = Mock()  # noqa: ERA001</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>Unfortunately mocking the <code>active_connections</code> attribute with <code>Mock</code> doesn't work because <code>Mock</code> doesn't implement the magic/special <code>__add__</code> method so it can't effectively mock an <code>int</code>.</p>
+<p>We could mock the <code>__add__</code> method ourselves, but that would be tedious and error-prone since it's not always obvious which magic methods are used by the code.</p>
+<p>Fortunately, <code>Mock</code> has a subclass called <code>MagicMock</code> that automatically implements the magic/special methods:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_magic</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+    <span class="c1"># This works as expected because MagicMock automatically implements the magic/special methods, including __add__</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">active_connections</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>Using <code>MagicMock</code> we don't have to worry about mocking any magic/special methods ourselves.</p>
+<div class="admonition tip">
+<p class="admonition-title">Magic Methods</p>
+<p>If you use the <code>spec</code> or <code>spec_set</code> arguments then only magic methods that exist in the spec will be created.
+You can override the magic methods of a <code>MagicMock</code> by setting them just like you would with a normal <code>Mock</code>.</p>
+</div>
+<h5 id="asyncmock">AsyncMock</h5>
+<p>We'd also like to test the <code>aconnect</code> method, but it's an async function so we can't use a simple <code>Mock</code> to mock it.</p>
+<p>Fortunately, <code>Mock</code> has a subclass called <code>AsyncMock</code> that can be used to mock async functions:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_aconnect_async_mock</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+    <span class="c1"># This raises a TypeError because the mock will simply return a boolean instead of a coroutine</span>
+    <span class="c1"># interface.aconnect_to_server.return_value = True  # noqa: ERA001</span>
+    <span class="c1"># We need to use AsyncMock to mock the async function properly</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">aconnect_to_server</span> <span class="o">=</span> <span class="n">AsyncMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">aconnect</span><span class="p">()</span>
+
+    <span class="c1"># We could use assert_called_once() as well, but assert_awaited_once() is more specific</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">aconnect_to_server</span><span class="o">.</span><span class="n">assert_awaited_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">AsyncMock calls</p>
+<p>You can use <code>assert_awaited_once()</code> or similar methods to check that an async function is awaited and not just called.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Decorator for async tests</p>
+<p>The <code>@pytest.mark.asyncio</code> decorator is required to run async tests.</p>
+</div>
 <h4 id="mocking-a-class">Mocking a class</h4>
 <h3 id="test-fixtures">Test Fixtures</h3>
 <h3 id="advanced-mocking">Advanced Mocking</h3>
