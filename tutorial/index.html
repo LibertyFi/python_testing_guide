@@ -24,6 +24,9 @@
     
       <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -51,7 +54,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -103,8 +111,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -284,9 +292,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#what-should-a-unit-test-do" class="md-nav__link">
+  <a href="#how-big-should-each-unit-test-be" class="md-nav__link">
     <span class="md-ellipsis">
-      What should a unit test do?
+      How big should each unit test be?
     </span>
   </a>
   
@@ -294,6 +302,108 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mocking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is mocking?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-a-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking a function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking an object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mocking an object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Mock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-the-mocks-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying the Mock's Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-vs-magicmock-vs-asyncmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock vs MagicMock vs AsyncMock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-a-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking a class
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Fixtures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Mocking
+    </span>
+  </a>
   
 </li>
         
@@ -405,9 +515,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#what-should-a-unit-test-do" class="md-nav__link">
+  <a href="#how-big-should-each-unit-test-be" class="md-nav__link">
     <span class="md-ellipsis">
-      What should a unit test do?
+      How big should each unit test be?
     </span>
   </a>
   
@@ -415,6 +525,108 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mocking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is mocking?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-a-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking a function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-an-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking an object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mocking an object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Mock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-the-mocks-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying the Mock's Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-vs-magicmock-vs-asyncmock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock vs MagicMock vs AsyncMock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mocking-a-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking a class
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Fixtures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Mocking
+    </span>
+  </a>
   
 </li>
         
@@ -469,7 +681,7 @@ The tests directory should have the same directory structure as the source code.
 ├── level_0/
 │ ├── test_calculator.py
 </code></pre></div>
-<h4 id="what-should-a-unit-test-do">What should a unit test do?</h4>
+<h4 id="how-big-should-each-unit-test-be">How big should each unit test be?</h4>
 <p>The goal of unit testing is to verify that small, isolated units of code (usually functions or methods) perform correctly and handle edge cases as designed.</p>
 <p>As such a unit test should be as simple as possible and test only one thing.</p>
 <p>Take the following example of a calculator module:</p>
@@ -533,12 +745,213 @@ The tests directory should have the same directory structure as the source code.
         <span class="n">divide</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 <p>If one test breaks, we instantly know which part of the calculator is broken. We even have a specific test for the edge case of the division operation.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-massa, nec semper lorem quam in massa.</p>
+<h3 id="mocking">Mocking</h3>
+<h4 id="what-is-mocking">What is mocking?</h4>
+<p>Mocking is a technique used to replace a function or method with a mock implementation in order to test the code that uses it.</p>
+<p>Take the following example of a simple class:</p>
+<div class="highlight"><span class="filename">session.py</span><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">src.level_1.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">connect_to_server</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Session</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">connect_to_server</span><span class="p">()</span>
+</code></pre></div>
+<p>We could test the single method of the class like so:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">result</span>
+</code></pre></div>
+<p>But the <code>connect_to_server</code> function comes from an external module, which we don't control in the <code>session</code> module.
+Each unit test should only test one unit of code. This test is actually testing both <code>session.connect</code> and <code>interface.connect_to_server</code>.
+If the test fails, there is no way to tell if it's because of the <code>connect</code> method or the <code>connect_to_server</code> function.</p>
+<h4 id="mocking-a-function">Mocking a function</h4>
+<p>To properly test the above <code>connect</code> method, we should mock the <code>connect_to_server</code> function. Here's how we can do it, using the <code>patch</code> function (here in decorator form):</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;src.level_1.session.connect_to_server&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success</span><span class="p">(</span><span class="n">mock_connect_to_server</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">mock_connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="c1"># Check that the mock was called by the connect method</span>
+    <span class="n">mock_connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="c1"># Check that the connect method returns the correct value</span>
+    <span class="k">assert</span> <span class="n">connected</span>
+
+
+<span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;src.level_1.session.connect_to_server&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_connect_failure</span><span class="p">(</span><span class="n">mock_connect_to_server</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">mock_connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">mock_connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">connected</span>
+</code></pre></div>
+<p>Mocking the <code>connect_to_server</code> function has several benefits:</p>
+<ul>
+<li>we're only testing the <code>connect</code> method, regardless of the actual implementation of <code>connect_to_server</code></li>
+<li>we're able to have two test cases for the <code>connect</code> method, one for when the connection is successful and one for when it's not because we control the return value of the mock</li>
+<li>we're not executing the actual <code>connect_to_server</code> function, which could require a specific setup, make network requests, or even be an expensive operation</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Patch in the right place</p>
+<p>When using the patch function, it's important to patch the function <strong>where it's used</strong>, not where it's defined.</p>
+<p><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/2705.svg" title=":white_check_mark:" /> <code>patch("src.level_1.session.connect_to_server")</code></p>
+<p><img alt="❌" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/274c.svg" title=":x:" /> <del><code>patch("src.level_1.interface.connect_to_server")</code></del></p>
 </div>
+<h4 id="mocking-an-object">Mocking an object</h4>
+<p>Let's use the following class as an example:</p>
+<div class="highlight"><span class="filename">session.py</span><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">src.level_2.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">ServerInterface</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Session</span><span class="p">:</span>
+    <span class="n">interface</span><span class="p">:</span> <span class="n">ServerInterface</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="n">ServerInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interface</span> <span class="o">=</span> <span class="n">interface</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">()</span>
+</code></pre></div>
+<p>In order to test the <code>connect</code> method, we first need to instantiate a <code>Session</code> object, which requires an <code>ServerInterface</code> object.</p>
+<p>Since we don't know what creating an actual <code>ServerInterface</code> object entails, and we don't want to test the <code>ServerInterface</code> class, we need to mock the <code>ServerInterface</code> object.</p>
+<h5 id="simple-mock">Simple Mock</h5>
+<p>The simplest way to mock an object is to use the <code>Mock</code> class, from the <code>unittest.mock</code> module.</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>Here we create a <code>Mock</code> object and assign a return value to its <code>connect_to_server</code> attribute.</p>
+<p>Now when the test calls <code>session.connect()</code>, it will call the <code>connect_to_server</code> method of the <code>Mock</code> instead of an actual <code>ServerInterface</code> object.</p>
+<p>And since we control the mock, we can even check that the <code>connect_to_server</code> method is indeed called by the <code>connect</code> method.</p>
+<h5 id="specifying-the-mocks-structure">Specifying the Mock's Structure</h5>
+<p><code>Mock</code> generates attributes on the fly so that the mock can be used automatically without worrying about setting it up.
+The downside of this is that you can use attributes that don't even exist on the original object.</p>
+<p>Here's an example:</p>
+<div class="highlight"><span class="filename">interface.py</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ServerInterface</span><span class="p">:</span>
+    <span class="n">class_attribute</span> <span class="o">=</span> <span class="s2">&quot;This is a class attribute&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance_attribute</span> <span class="o">=</span> <span class="s2">&quot;This is an instance attribute&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect_to_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Called actual connect_to_server&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_shouldnt_be_allowed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># This doesn&#39;t raise an error, but it shouldn&#39;t be possible</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">not_an_actual_attribute</span> <span class="o">=</span> <span class="s2">&quot;This shouldn&#39;t be possible&quot;</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>The <code>ServerInterface</code> object we want to mock doesn't have a <code>not_an_actual_attribute</code> attribute, so we shouldn't allow the mock to have it.
+Moreover, even if the <code>connect</code> method actually uses <code>not_an_actual_attribute</code>, this test will still pass even though the attribute doesn't actually exist, which will make <code>connect</code> crash at runtime.</p>
+<p>Thankfully, there are ways to specify the structure of the mock object.</p>
+<p>The best (strictest) way is to use the <code>spec_set</code> argument to specify to the <code>Mock</code> constructor the class of the object we want to mock:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_spec_set</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">spec_set</span><span class="o">=</span><span class="n">ServerInterface</span><span class="p">)</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># This raises an AttributeError</span>
+    <span class="c1"># interface.not_an_actual_attribute = &quot;This shouldn&#39;t be possible&quot;  # noqa: ERA001</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>This will raise an error if we try to access an attribute that doesn't exist in the <code>ServerInterface</code> class.</p>
+<p>Unfortunately, instance attributes are not part of the class specification, so they don't exist as far as <code>spec_set</code> is concerned.</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_spec_set_instance_attribute</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">spec_set</span><span class="o">=</span><span class="n">ServerInterface</span><span class="p">)</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># This works as expected</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">class_attribute</span> <span class="o">=</span> <span class="s2">&quot;This is a class attribute&quot;</span>
+    <span class="c1"># This raises an AttributeError</span>
+    <span class="c1"># interface.instance_attribute = &quot;This attribute doesn&#39;t exist when the mock is created&quot;  # noqa: ERA001</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<p>If you need to mock an instance attribute (or any attribute that is defined at runtime), you can use <code>spec</code> instead of <code>spec_set</code>:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_simple_spec_for_instance_attribute</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ServerInterface</span><span class="p">)</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">class_attribute</span> <span class="o">=</span> <span class="s2">&quot;This is a class attribute&quot;</span>
+    <span class="c1"># Now this works</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">instance_attribute</span> <span class="o">=</span> <span class="s2">&quot;This is an instance attribute&quot;</span>
+    <span class="c1"># But this will still raise an AttributeError</span>
+    <span class="c1"># logging.info(f&quot;{interface.unset_instance_attribute}&quot;)  # noqa: ERA001</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>spec</code> vs <code>spec_set</code></p>
+<p><code>spec</code> is not as strict as <code>spec_set</code>, it will simply ensure that an attribute can't be accessed if it has not been set, whether by the test or the specified class:</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_simple_spec_is_lax</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ServerInterface</span><span class="p">)</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># This will not raise an error</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">not_an_actual_attribute</span> <span class="o">=</span> <span class="s2">&quot;This doesn&#39;t exist in the specified class&quot;</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">connect_to_server</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">connected</span>
+</code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">One-liner syntax</p>
+<p>You can also define the mock and its attributes at the same time if you prefer the one-liner syntax.</p>
+<div class="highlight"><span class="filename">test_session.py</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_connect_success_simple_spec_one_liner</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span>
+        <span class="n">spec</span><span class="o">=</span><span class="n">ServerInterface</span><span class="p">,</span>
+        <span class="n">class_attribute</span><span class="o">=</span><span class="s2">&quot;This is a class attribute&quot;</span><span class="p">,</span>
+        <span class="n">instance_attribute</span><span class="o">=</span><span class="s2">&quot;This is an instance attribute&quot;</span><span class="p">,</span>
+        <span class="n">connect_to_server</span><span class="o">=</span><span class="n">Mock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">)</span>
+</code></pre></div>
+</div>
+<h4 id="mock-vs-magicmock-vs-asyncmock">Mock vs MagicMock vs AsyncMock</h4>
+<h4 id="mocking-a-class">Mocking a class</h4>
+<h3 id="test-fixtures">Test Fixtures</h3>
+<h3 id="advanced-mocking">Advanced Mocking</h3>
 
 
 
