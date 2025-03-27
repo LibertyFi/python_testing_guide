@@ -2,6 +2,8 @@ site_name: Python Testing Guide
 
 theme:
   name: "material"
+  palette:
+    scheme: slate
 
 nav:
   - Tutorial: tutorial.md

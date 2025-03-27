@@ -67,8 +67,8 @@ Whereas if we split it into true unit tests, like so:
 
 If one test breaks, we instantly know which part of the calculator is broken. We even have a specific test for the edge case of the division operation.
 
-!!! note
+<!-- !!! note
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
     nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-    massa, nec semper lorem quam in massa.
+    massa, nec semper lorem quam in massa. -->
