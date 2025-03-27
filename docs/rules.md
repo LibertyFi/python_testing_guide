@@ -96,19 +96,21 @@ Structure your tests like so:
 
 Separate each part with an empty line.
 
+The names of the test functions should follow this pattern:
+`test_<name_of_the_tested_entity>_<description_of_the_test_case>`
+
 Here's an example:
 
 ```python
-def test_method_0(fixture_mock: MagicMock):
+def test_method_0_xxx_is_false(fixture_xxx_mock: MagicMock):
     mock_a = MagicMock()
-    mock_b = MagicMock()
     my_instance = MyClass(mock_a)
-    fixture_mock.return_value = mock_b
+    fixture_xxx_mock.return_value = False
 
     result = my_instance.method_0()
 
     mock_a.method_0.assert_called_once()
-    mock_b.method_0.assert_called_once()
+    fixture_xxx_mock.assert_called_once()
 
     assert result == "expected_value"
 ```
