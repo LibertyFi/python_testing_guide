@@ -7,7 +7,7 @@ theme:
 
 nav:
   - Tutorial: tutorial.md
-  - Guide: guide.md
+  - Rules: rules.md
 
 plugins:
   - search

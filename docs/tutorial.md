@@ -283,9 +283,20 @@ So let's mock the `Database` class as well:
 
 Since the `Database` class is used with a context manager, using `with`, through its `get` method, the mock definition is a bit more complicated.
 
+!!! tip "Using `spec_set` or `spec` inside the patch decorator"
+
+    Use `spec_set` or `spec` inside a patch decorator to specify the structure of the resulting mock.
+
 !!! danger "The order of patch decorators matters"
 
-    The patch decorators automatically provide the test function with the mocks as arguments. The arguments are provided in the same order as the decorators are applied to the function, which is the opposite order as the decorators appear above the test function. Thus the first argument will match de decorator closest to the function and the last argument the furthest.
+    The patch decorators automatically provide the test function with the mocks as arguments. The arguments are provided in the same order as the decorators are applied to the function, which is the opposite order as the decorators appear above the test function. Thus the first argument will match the decorator closest to the function and the last argument the furthest.
+
+    ```python
+    @patch("xxx.b")
+    @patch("xxx.a")
+    def test_function(mock_a, mock_b):
+        ...
+    ```
 
 ### Test Fixtures
 
