@@ -471,17 +471,18 @@
 <li>value asserts</li>
 </ol>
 <p>Separate each part with an empty line.</p>
+<p>The names of the test functions should follow this pattern:
+<code>test_&lt;name_of_the_tested_entity&gt;_&lt;description_of_the_test_case&gt;</code></p>
 <p>Here's an example:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_method_0</span><span class="p">(</span><span class="n">fixture_mock</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_method_0_xxx_is_false</span><span class="p">(</span><span class="n">fixture_xxx_mock</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">):</span>
     <span class="n">mock_a</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
-    <span class="n">mock_b</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
     <span class="n">my_instance</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">mock_a</span><span class="p">)</span>
-    <span class="n">fixture_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_b</span>
+    <span class="n">fixture_xxx_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">my_instance</span><span class="o">.</span><span class="n">method_0</span><span class="p">()</span>
 
     <span class="n">mock_a</span><span class="o">.</span><span class="n">method_0</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
-    <span class="n">mock_b</span><span class="o">.</span><span class="n">method_0</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+    <span class="n">fixture_xxx_mock</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
 
     <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;expected_value&quot;</span>
 </code></pre></div>
