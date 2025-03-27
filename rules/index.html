@@ -18,7 +18,7 @@
     
     
       
-        <title>Guide - Python Testing Guide</title>
+        <title>Rules - Python Testing Guide</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#guide" class="md-skip">
+        <a href="#rules" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Guide
+              Rules
             
           </span>
         </div>
@@ -227,16 +227,83 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Rules
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Guide
+    Rules
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Structure
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -262,6 +329,50 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mocking
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Structure
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -276,30 +387,104 @@
 
 
 
-<h1 id="guide">Guide</h1>
+<h1 id="rules">Rules</h1>
+<p>Here are the rules to follow when writing tests:</p>
+<h2 id="project-structure">Project Structure</h2>
 <ul>
-<li>Use MagicMock and AsyncMock, avoid using Mock unless there’s a good reason not to auto mock the magic methods</li>
-<li>Use MagicMock with spec_set if only the class attributes need to be mocked MagicMock(spec_set=MyClass)</li>
-<li>Use MagicMock with spec if instance attributes need to be mocked. You can specify the instance attributes in a one liner MagicMock(spec=MyClass, attribute_0 = “value0”, attribute_1 = “value1”).</li>
-<li>Never use MagicMock without spec or spec_set</li>
-<li>Structure your test file like so:</li>
+<li>Put all test files in the <code>tests</code> directory.</li>
+<li>The tests directory should have the same internal directory structure as the source code.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code>project_root/
+├── src/
+│ ├── feature_0/
+│ │ ├── module_0.py
+│ │ └── module_1.py
+├── tests/
+│ ├── feature_0/
+│ │ ├── test_module_0.py
+│ │ └── test_module_1.py
+</code></pre></div>
+<h2 id="mocking">Mocking</h2>
+<ul>
+<li>Use <code>MagicMock</code> and <code>AsyncMock</code>, avoid using <code>Mock</code> unless there’s a good reason not to auto mock the magic methods</li>
+<li>Use <code>MagicMock(spec_set=MyClass)</code> if only the class attributes need to be mocked</li>
+<li>Use <code>MagicMock(spec=MyClass)</code> if instance attributes need to be mocked</li>
+<li>Do not use <code>MagicMock</code> without <code>spec</code> or <code>spec_set</code></li>
+<li>Use <code>@patch</code> decorators to mock things for a specific test</li>
+<li>Do not use the <code>patch</code> function as a context manager inside tests</li>
+<li>Keep in mind that the order of the decorators must match the <strong>reverse</strong> order of the arguments in the signature of the test function</li>
+<li>Use <code>spec</code> and <code>spec_set</code> in the patch if it patches a class or an object</li>
+<li>If the same patch or mock is used by more than 2 tests, define a test fixture</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;xxx.b&quot;</span><span class="p">,</span> <span class="n">spec_set</span><span class="o">=</span><span class="n">ClassToMock</span><span class="p">)</span>
+<span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;xxx.function&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_function</span><span class="p">(</span><span class="n">mock_function</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">mock_b</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">fixture_mock</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">):</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h2 id="file-structure">File Structure</h2>
+<p>Structure your test file like so:</p>
+<ol>
 <li>imports</li>
 <li>common mock constants</li>
 <li>test fixtures</li>
 <li>tests</li>
-<li>Use helper functions to avoid duplicating code between tests, for initialization code or mock setup for instance. Put the helper functions inbetween the tests, before the tests that use them.</li>
-<li>Use patch decorators to mock things for a specific test</li>
-<li>Use spec and spec_set in the patch if it patches a class or an object</li>
-<li>If the same patch or variable mock is used by more than 2 tests, make it a test fixture</li>
-<li>Structure your tests like so:</li>
+</ol>
+<p>Use helper functions to avoid duplicating code between tests, for initialization code or mock setup for instance. Put the helper functions inbetween the tests, before the tests that use them.</p>
+<p>Here's an example:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.feature_0.module_0</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyClass</span>
+
+<span class="n">MOCK_CONSTANT</span> <span class="o">=</span> <span class="s2">&quot;mock_constant&quot;</span>
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_fixture</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_method_0</span><span class="p">(</span><span class="n">my_fixture</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">MyClass</span><span class="o">.</span><span class="n">method_0</span><span class="p">()</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">helper_function</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_method_1</span><span class="p">(</span><span class="n">my_fixture</span><span class="p">):</span>
+    <span class="n">helper_function</span><span class="p">()</span>
+    <span class="o">...</span>
+    <span class="n">MyClass</span><span class="o">.</span><span class="n">method_1</span><span class="p">()</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_method_2</span><span class="p">(</span><span class="n">my_fixture</span><span class="p">):</span>
+    <span class="n">helper_function</span><span class="p">()</span>
+    <span class="o">...</span>
+    <span class="n">MyClass</span><span class="o">.</span><span class="n">method_2</span><span class="p">()</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h2 id="test-structure">Test Structure</h2>
+<p>Structure your tests like so:</p>
+<ol>
 <li>initialization of variables and mocks</li>
-<li>empty line</li>
 <li>call to the function under test</li>
-<li>empty line</li>
 <li>mock calls asserts</li>
-<li>empty line</li>
 <li>value asserts</li>
-</ul>
+</ol>
+<p>Separate each part with an empty line.</p>
+<p>Here's an example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_method_0</span><span class="p">(</span><span class="n">fixture_mock</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">):</span>
+    <span class="n">mock_a</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">mock_b</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">my_instance</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">mock_a</span><span class="p">)</span>
+    <span class="n">fixture_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_b</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">my_instance</span><span class="o">.</span><span class="n">method_0</span><span class="p">()</span>
+
+    <span class="n">mock_a</span><span class="o">.</span><span class="n">method_0</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+    <span class="n">mock_b</span><span class="o">.</span><span class="n">method_0</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;expected_value&quot;</span>
+</code></pre></div>
 
 
 
