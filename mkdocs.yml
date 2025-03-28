@@ -8,6 +8,7 @@ theme:
 nav:
   - Tutorial: tutorial.md
   - Rules: rules.md
+  - Sources: sources.md
 
 plugins:
   - search

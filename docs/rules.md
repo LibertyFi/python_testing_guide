@@ -23,6 +23,7 @@ project_root/
 
 ## Mocking
 
+- As a unit test should test a single entity, mock everything that is not part of the entity under test, such as external functions, classes, etc. as well as other methods than the one under test.
 - Use `MagicMock` and `AsyncMock`, avoid using `Mock` unless there’s a good reason not to auto mock the magic methods
 - Use `MagicMock(spec_set=MyClass)` if only the class attributes need to be mocked
 - Use `MagicMock(spec=MyClass)` if instance attributes need to be mocked
