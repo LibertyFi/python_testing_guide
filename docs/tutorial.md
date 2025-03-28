@@ -298,6 +298,52 @@ Since the `Database` class is used with a context manager, using `with`, through
         ...
     ```
 
+#### Using `patch.object`
+
+If you need to patch an attribute of an object already accessible in the test module, such as an imported class for example, you can use `patch.object` instead of the `patch`.
+For instance, if we wanted to patch the `connect` method of the `Session` class, we could do it like this:
+
+```python
+from src.level_4.session import Session
+
+@patch.object(Session, "connect")
+def test_function(mock_connect: MagicMock):
+    ...
+```
+
+instead of:
+
+```python
+from src.level_4.session import Session
+
+@patch("src.level_4.session.Session.connect")
+def test_function(mock_connect: MagicMock):
+    ...
+```
+
+!!! danger
+
+    Be careful that the way the object is imported is the same way you would use with `patch`.
+
+    ```python
+    from src.level_4.interface import ServerInterface
+
+    @patch.object(ServerInterface, "connect_to_server")
+    def test_function(mock_connect: MagicMock):
+        ...
+    ```
+
+    is not equivalent to:
+
+
+    ```python
+    from src.level_4.interface import ServerInterface
+
+    @patch("src.level_4.session.ServerInterface.connect_to_server")
+    def test_function(mock_connect: MagicMock):
+        ...
+    ```
+
 ### Test Fixtures
 
 Let's use a new example class:
