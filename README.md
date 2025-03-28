@@ -8,7 +8,7 @@ To read the guide, go to [this repo's github pages](https://libertyfi.github.io/
 
 ### Prerequisites
 
-- Install [Poetry](https://python-poetry.org/)
+- Install [Poetry](https://python-poetry.org/docs/)
 - Install dependencies with `poetry install`
 
 ### Local development
