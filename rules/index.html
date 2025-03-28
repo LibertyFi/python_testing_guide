@@ -12,6 +12,8 @@
         <link rel="prev" href="../tutorial/">
       
       
+        <link rel="next" href="../sources/">
+      
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
@@ -309,6 +311,27 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sources
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -407,6 +430,7 @@
 </code></pre></div>
 <h2 id="mocking">Mocking</h2>
 <ul>
+<li>As a unit test should test a single entity, mock everything that is not part of the entity under test, such as external functions, classes, etc. as well as other methods than the one under test.</li>
 <li>Use <code>MagicMock</code> and <code>AsyncMock</code>, avoid using <code>Mock</code> unless there’s a good reason not to auto mock the magic methods</li>
 <li>Use <code>MagicMock(spec_set=MyClass)</code> if only the class attributes need to be mocked</li>
 <li>Use <code>MagicMock(spec=MyClass)</code> if instance attributes need to be mocked</li>
