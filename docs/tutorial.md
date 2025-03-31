@@ -194,6 +194,8 @@ If you need to mock an instance attribute (or any attribute that is defined at r
     --8<-- "tests/level_2/test_session.py:simple_spec_one_liner"
     ```
 
+    Just beware that this doesn't work for some attribute names which are used by the `Mock` class, such as `name`.
+
 #### When Mock is not enough
 
 Sometimes using `Mock` is not enough. Let's take this new example class:

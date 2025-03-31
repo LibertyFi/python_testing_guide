@@ -11,7 +11,7 @@ For example:
 
 ```text
 project_root/
-├── src/
+├── <src_dir>/
 │ ├── feature_0/
 │ │ ├── module_0.py
 │ │ └── module_1.py
@@ -29,6 +29,7 @@ project_root/
 - Use `MagicMock(spec_set=MyClass)` if only the class attributes need to be mocked
 - Use `MagicMock(spec=MyClass)` if instance attributes need to be mocked
 - Do not use `MagicMock` without `spec` or `spec_set`
+- Beware that `name` can't be set as an attribute of a `MagicMock` using the one-liner syntax, it has to be set after the mock is created
 - Use `@patch` decorators to mock things for a specific test
 - Do not use the `patch` function as a context manager inside tests
 - Use the `patch` function as a context manager inside test fixtures
