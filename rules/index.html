@@ -419,7 +419,7 @@
 </ul>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code>project_root/
-├── src/
+├── &lt;src_dir&gt;/
 │ ├── feature_0/
 │ │ ├── module_0.py
 │ │ └── module_1.py
@@ -436,6 +436,7 @@
 <li>Use <code>MagicMock(spec_set=MyClass)</code> if only the class attributes need to be mocked</li>
 <li>Use <code>MagicMock(spec=MyClass)</code> if instance attributes need to be mocked</li>
 <li>Do not use <code>MagicMock</code> without <code>spec</code> or <code>spec_set</code></li>
+<li>Beware that <code>name</code> can't be set as an attribute of a <code>MagicMock</code> using the one-liner syntax, it has to be set after the mock is created</li>
 <li>Use <code>@patch</code> decorators to mock things for a specific test</li>
 <li>Do not use the <code>patch</code> function as a context manager inside tests</li>
 <li>Use the <code>patch</code> function as a context manager inside test fixtures</li>

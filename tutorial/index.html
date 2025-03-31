@@ -1197,6 +1197,7 @@ Moreover, even if the <code>connect</code> method actually uses <code>not_an_act
         <span class="n">connect_to_server</span><span class="o">=</span><span class="n">Mock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">)</span>
 </code></pre></div>
+<p>Just beware that this doesn't work for some attribute names which are used by the <code>Mock</code> class, such as <code>name</code>.</p>
 </div>
 <h4 id="when-mock-is-not-enough">When Mock is not enough</h4>
 <p>Sometimes using <code>Mock</code> is not enough. Let's take this new example class:</p>
