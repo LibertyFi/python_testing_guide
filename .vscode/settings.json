@@ -22,9 +22,9 @@
     "**/poetry.lock": true,
     ".mariadb": true
   },
-  "python.languageServer": "Pylance",
+  "python.languageServer": "None",
   "python.terminal.activateEnvironment": false,
-  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "standard",
   "ruff.nativeServer": "on",
   "ruff.lineLength": 120,
   "[toml]": {
@@ -32,5 +32,6 @@
   },
   "[json|jsonc|yaml|html|typescript|markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cursorpyright.analysis.typeCheckingMode": "standard"
 }

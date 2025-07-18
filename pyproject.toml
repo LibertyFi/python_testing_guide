@@ -57,6 +57,7 @@ lint.ignore = [
 venvPath = "."
 venv = ".venv"
 exclude = ["**/node_modules", "**/__pycache__", "**/.*", "tests"]
+typeCheckingMode = "standard"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

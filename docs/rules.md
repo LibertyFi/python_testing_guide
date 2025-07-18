@@ -21,19 +21,40 @@ project_root/
 │ │ └── test_module_1.py
 ```
 
+## What to test
+
+The goal of unit testing is to verify that small, isolated units of code (usually functions or methods) perform correctly and handle edge cases as designed.
+
+As such a unit test should be as simple as possible and test only one thing.
+
+There should be enough tests to cover all the code paths and edge cases of the entity being tested. For instance there should be separate test cases for:
+
+- branches of an `if` statement
+- branches of a try/except block
+- special values of arguments (None, empty objects, etc.)
+
+The ultimate goal is to have a test coverage of 100% for the entity being tested, so that each part of the code will have been executed at least once when running the tests.
+
 ## Mocking
 
-- As a unit test should test a single entity, mock everything that is not part of the entity under test, such as external functions, classes, etc.
-- As a unit test should test a single entity, when testing a specific class method, mock the other methods of that same class as well.
+### What to mock
+
+A unit test should test a single entity. So you should mock everything that is controlled by the entity being tested. For instance:
+
+- All external functions, classes, etc. must be mocked. The only exceptions are standard libraries that don't require a specific setup to work, such as `datetime`, `math`, `random`, etc.
+- When testing a specific method of a class, mock the other methods of that same class as well.
+
+### How to mock
+
 - Use `MagicMock` and `AsyncMock`, avoid using `Mock` unless there’s a good reason not to auto mock the magic methods
 - Use `MagicMock(spec_set=MyClass)` if only the class attributes need to be mocked
 - Use `MagicMock(spec=MyClass)` if instance attributes need to be mocked
 - Do not use `MagicMock` without `spec` or `spec_set`
 - Beware that `name` can't be set as an attribute of a `MagicMock` using the one-liner syntax, it has to be set after the mock is created
-- Use `@patch` decorators to mock things for a specific test
-- Do not use the `patch` function as a context manager inside tests
-- Use the `patch` function as a context manager inside test fixtures
-- Use `patch.object` when patching an attribute of an object accessible in the test module, such as an imported class for example
+- Use `@patch` decorators to mock things for a specific test, do not use the `patch` function as a context manager inside the tests. There is only one exception to this rule: when you need to mock a module imported in the init method of an object, then you need to instanciate the object and then patch the imported module using the `patch` function as a context manager.
+- When patching an attribute (not an imported module) of an instanciated object, simply use `object.attribute = MagicMock()/AsyncMock()`.
+- However you can and should use the `patch` function as a context manager inside test fixtures
+- Use `@patch.object` instead of `@patch` (and `patch.object` instead of `patch`) when patching an attribute or a method of an object accessible in the test module, such as a class that is imported by the test module. For instance, the correct way to mock the method of a class is `@patch.object(MyClass, "method")`.
 - Keep in mind that the order of the decorators must match the **reverse** order of the arguments in the signature of the test function
 - Use `spec` and `spec_set` in the patch if it patches a class or an object
 - If the same patch or mock is used by more than 2 tests, define a test fixture
