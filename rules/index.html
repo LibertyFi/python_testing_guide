@@ -277,11 +277,44 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-to-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mocking" class="md-nav__link">
     <span class="md-ellipsis">
       Mocking
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Mocking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-to-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to mock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to mock
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -368,11 +401,44 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-to-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mocking" class="md-nav__link">
     <span class="md-ellipsis">
       Mocking
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Mocking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-to-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to mock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to mock
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -428,19 +494,34 @@
 │ │ ├── test_module_0.py
 │ │ └── test_module_1.py
 </code></pre></div>
-<h2 id="mocking">Mocking</h2>
+<h2 id="what-to-test">What to test</h2>
+<p>The goal of unit testing is to verify that small, isolated units of code (usually functions or methods) perform correctly and handle edge cases as designed.</p>
+<p>As such a unit test should be as simple as possible and test only one thing.</p>
+<p>There should be enough tests to cover all the code paths and edge cases of the entity being tested. For instance there should be separate test cases for:</p>
 <ul>
-<li>As a unit test should test a single entity, mock everything that is not part of the entity under test, such as external functions, classes, etc.</li>
-<li>As a unit test should test a single entity, when testing a specific class method, mock the other methods of that same class as well.</li>
+<li>branches of an <code>if</code> statement</li>
+<li>branches of a try/except block</li>
+<li>special values of arguments (None, empty objects, etc.)</li>
+</ul>
+<p>The ultimate goal is to have a test coverage of 100% for the entity being tested, so that each part of the code will have been executed at least once when running the tests.</p>
+<h2 id="mocking">Mocking</h2>
+<h3 id="what-to-mock">What to mock</h3>
+<p>A unit test should test a single entity. So you should mock everything that is controlled by the entity being tested. For instance:</p>
+<ul>
+<li>All external functions, classes, etc. must be mocked. The only exceptions are standard libraries that don't require a specific setup to work, such as <code>datetime</code>, <code>math</code>, <code>random</code>, etc.</li>
+<li>When testing a specific method of a class, mock the other methods of that same class as well.</li>
+</ul>
+<h3 id="how-to-mock">How to mock</h3>
+<ul>
 <li>Use <code>MagicMock</code> and <code>AsyncMock</code>, avoid using <code>Mock</code> unless there’s a good reason not to auto mock the magic methods</li>
 <li>Use <code>MagicMock(spec_set=MyClass)</code> if only the class attributes need to be mocked</li>
 <li>Use <code>MagicMock(spec=MyClass)</code> if instance attributes need to be mocked</li>
 <li>Do not use <code>MagicMock</code> without <code>spec</code> or <code>spec_set</code></li>
 <li>Beware that <code>name</code> can't be set as an attribute of a <code>MagicMock</code> using the one-liner syntax, it has to be set after the mock is created</li>
-<li>Use <code>@patch</code> decorators to mock things for a specific test</li>
-<li>Do not use the <code>patch</code> function as a context manager inside tests</li>
-<li>Use the <code>patch</code> function as a context manager inside test fixtures</li>
-<li>Use <code>patch.object</code> when patching an attribute of an object accessible in the test module, such as an imported class for example</li>
+<li>Use <code>@patch</code> decorators to mock things for a specific test, do not use the <code>patch</code> function as a context manager inside the tests. There is only one exception to this rule: when you need to mock a module imported in the init method of an object, then you need to instanciate the object and then patch the imported module using the <code>patch</code> function as a context manager.</li>
+<li>When patching an attribute (not an imported module) of an instanciated object, simply use <code>object.attribute = MagicMock()/AsyncMock()</code>.</li>
+<li>However you can and should use the <code>patch</code> function as a context manager inside test fixtures</li>
+<li>Use <code>@patch.object</code> instead of <code>@patch</code> (and <code>patch.object</code> instead of <code>patch</code>) when patching an attribute or a method of an object accessible in the test module, such as a class that is imported by the test module. For instance, the correct way to mock the method of a class is <code>@patch.object(MyClass, "method")</code>.</li>
 <li>Keep in mind that the order of the decorators must match the <strong>reverse</strong> order of the arguments in the signature of the test function</li>
 <li>Use <code>spec</code> and <code>spec_set</code> in the patch if it patches a class or an object</li>
 <li>If the same patch or mock is used by more than 2 tests, define a test fixture</li>
